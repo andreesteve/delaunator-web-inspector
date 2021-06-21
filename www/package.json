@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rustwasm/create-wasm-app.git"
+    "url": "https://github.com/andreesteve/delaunator-web-inspector.git"
   },
   "keywords": [
     "webassembly",
@@ -20,12 +20,12 @@
     "rust",
     "webpack"
   ],
-  "author": "Ashley Williams <ashley666ashley@gmail.com>",
-  "license": "(MIT OR Apache-2.0)",
+  "author": "Andre Esteve <andreesteve@gmail.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rustwasm/create-wasm-app/issues"
+    "url": "https://github.com/andreesteve/delaunator-web-inspector/issues"
   },
-  "homepage": "https://github.com/rustwasm/create-wasm-app#readme",
+  "homepage": "https://github.com/andreesteve/delaunator-web-inspector#readme",
   "dependencies": {
     "delaunator-wasm": "file:../pkg",
     "delaunator": "5.0.0",

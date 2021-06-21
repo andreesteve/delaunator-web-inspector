@@ -1,0 +1,12 @@
+#!/bin/bash
+_dir=$(dirname "$0")
+_www=$_dir/www
+_dist=$_www/dist
+_dst=/tmp/delaunator-web-inspector
+
+rm -fr $_dst
+rm -fr $_dist
+wasm-pack build
+npm --prefix $_www run build -- --mode production
+cp -r $_dist $_dst
+echo "Bits available at $_dst"
