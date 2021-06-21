@@ -8,7 +8,7 @@ function renderPoints(points, context, r = 2.5, includeLabel = true) {
         context.arc(x, y, r, 0, 2 * Math.PI);
 
         if (includeLabel) {
-            context.fillText(i / 2, x, y - r);
+            context.fillText(i / 2, x - 4*r, y - 4*r);
         }
     }
 }
@@ -65,7 +65,10 @@ function renderOnCanvas(points, delaunator, canvasId) {
     const scale = Math.min(width / (maxX - minX), height / (maxY - minY)) * 0.75;
 
     context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, width, height);
+    context.fillStyle = "white";
+    context.fillRect(0, 0, width, height);
+
+    context.fillStyle = "black";
     context.font = '0.75px serif';
 
     context.translate(width / 2, height / 2);

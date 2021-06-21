@@ -2,14 +2,34 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hello wasm-pack!</title>
+    <title>Delaunator inspector</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     <!-- Javascripts -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
     <style>
+      body {
+        margin: 0;
+        background-color: #F4F4F8;
+      }
+
+      .header {
+        background-color: #009FB7;
+        box-shadow: 0 0 4px 2px rgb(0 0 0 / 40%);
+        color: rgb(253, 253, 253);
+        display: flex;
+        margin-bottom: 20px;
+        padding: 10px;
+      }
+
+      .content {
+        margin: 10px;
+      }
+
       .container {
         display: flex;
+        margin: 0 0 10px 0;
       }
 
       .container .column {
@@ -27,8 +47,31 @@
 
       .pointsinput {
         width: 100%;
-        height: 50px;
+        height: 150px;
         resize:vertical;
+      }
+
+      h2, h3 {
+        width: 60%;
+        border-bottom: 5px solid #FE4A49;
+      }
+
+      textarea, input {
+        background-color: #E6E6EA;
+      }
+
+      .line {
+        vertical-align: middle;
+        height: 50px;
+      }
+
+      .generator {
+        text-align: center;
+        line-height: 20px;
+      }
+
+      .imgbutton {
+        border: 0;
       }
     </style>
   </head>
@@ -36,72 +79,95 @@
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <script src="./bootstrap.js"></script>
 
-    <div>
-      <span>Url:</span>
-      <input id="hashinput" readonly="true"></input>
-      <button id="copyurl">Copy</button>
+    <div class="header">
+      <h1>Delaunator inspector
     </div>
 
-    <button class="generator" data-size="10">Generate 10 random points</button>
-    <button class="generator" data-size="20">Generate 20 random points</button>
-    <button class="generator" data-size="100">Generate 100 random points</button>
-    <button class="generator" data-size="1000">Generate 1000 random points</button>
-    <button class="generator" data-size="5000">Generate 5000 random points</button>
-    <textarea class="pointsinput" id="points"></textarea>
-    <div>
-      <span id="points" />
-    </div>
+    <div class="content">
 
-    <div class="canvas-container">
-      <canvas id="wasm" class="left"></canvas>
-      <canvas id="js" class="right"></canvas>
-    </div>
-    <div class="container">
+      <div class="container">
+        <div class="column">
+          <button class="generator" data-size="10"><span class="material-icons">&#xe043;</span> 10</button>
+          <button class="generator" data-size="20"><span class="material-icons">&#xe043;</span> 20</button>
+          <button class="generator" data-size="100"><span class="material-icons">&#xe043;</span> 100</button>
+          <button class="generator" data-size="1000"><span class="material-icons">&#xe043;</span> 1000</button>
+          <button class="generator" data-size="5000"><span class="material-icons">&#xe043;</span> 5000</button>
+        </div>
 
-      <div class="column">
-        <h3>Delaunator-rs (WASM)</h3>
-        <div class="container">
-          <div class="column">
-            <span>Version:</span>
-          </div>
-          <div class="column">
-            <span id="wasm-version"></span>
+        <div class="column">
+          <label for="hashinput">Url:</label>
+          <input id="hashinput" readonly="true"></input>
+          <button class="imgbutton" id="copyurl"><span class="material-icons">&#xe14d;</span></button>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="column">
+          <h3>Delaunator-rs (WASM)</h3>
+          <div class="container">
+            <div class="column">
+              <span>Version:</span>
+            </div>
+            <div class="column">
+              <span id="wasm-version"></span>
+            </div>
           </div>
         </div>
 
-        <div class="container">
-          <div class="column">
-            <span>Triangulation time (ms):</span>
-          </div>
-          <div class="column">
-            <span id="wasm-elapsed"></span>
+        <div class="column">
+          <h3>Delaunator (Javascript)</h3>
+          <div class="container">
+            <div class="column">
+              <span>Version:</span>
+            </div>
+            <div class="column">
+              <span id="js-version"></span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="column">
-        <h3>Delaunator (Javascript)</h3>
-        <div class="container">
-          <div class="column">
-            <span>Version:</span>
-          </div>
-          <div class="column">
-            <span id="js-version"></span>
+      <div class="canvas-container">
+        <canvas id="wasm" class="left"></canvas>
+        <canvas id="js" class="right"></canvas>
+      </div>
+
+      <div class="container">
+
+        <div class="column">
+          <div class="container">
+            <div class="column">
+              <span>Triangulation time (ms):</span>
+            </div>
+            <div class="column">
+              <span id="wasm-elapsed"></span>
+            </div>
           </div>
         </div>
 
-        <div class="container">
-          <div class="column">
-            <span>Triangulation time (ms):</span>
-          </div>
-          <div class="column">
-            <span id="js-elapsed"></span>
+        <div class="column">
+          <div class="container">
+            <div class="column">
+              <span>Triangulation time (ms):</span>
+            </div>
+            <div class="column">
+              <span id="js-elapsed"></span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <button id="show-diff">Calculate result differences</button>
-    <div id="diff"></div>
+      <h3>Points</h2>
+      <div class="container">
+        <textarea class="pointsinput" id="points"></textarea>
+      </div>
+
+      <h3>Result diff</h2>
+      <div class="container">
+        <button id="show-diff">Calculate result differences</button>
+      </div>
+      <div id="diff"></div>
+    </div>
   </body>
 </html>
