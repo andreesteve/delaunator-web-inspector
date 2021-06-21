@@ -47,7 +47,10 @@ export function triangulateRS(points) {
 
     console.log(`WASM: finished - ${ elapsed } ms (wasm: ${elapsed_wasm_only} ms, js: ${elapsedDiff} ms).`);
 
-    return result;
+    return {
+        result,
+        elapsed
+    };
 }
 
 export function triangulateJS(points) {
@@ -65,12 +68,20 @@ export function triangulateJS(points) {
 
     console.log(`JS: finished - ${ elapsed } ms.`);
 
-    return result;
+    return {
+        result,
+        elapsed
+    };
 }
 
 export function fromPoints(points) {
-    const rs = triangulateRS(points);
-    const js = triangulateJS(points);
+    // if odd size, remove one point
+    if (points.length % 2 == 1) {
+        points.pop();
+    }
+
+    const { result: rs, elapsed: rsElapsed } = triangulateRS(points);
+    const { result: js, elapsed: jsElapsed } = triangulateJS(points);
 
     // So we can compare JS and WASM results
     rs.halfedges = normalize_haldedges(rs.halfedges, rs.empty);
@@ -78,7 +89,9 @@ export function fromPoints(points) {
     const state = {
         points,
         rs,
-        js
+        rsElapsed,
+        js,
+        jsElapsed
     };
 
     return state;

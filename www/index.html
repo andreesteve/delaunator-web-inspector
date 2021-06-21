@@ -8,14 +8,19 @@
     <!-- Javascripts -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
     <style>
+      .container {
+        display: flex;
+      }
+
+      .container .column {
+        width: 100%;
+      }
+
       .canvas-container {
-        display: block;
         width: 100%;
       }
 
       .canvas-container canvas {
-        display: block;
-        float: left;
         width: 49%;
         border: 1px solid black;
       }
@@ -30,6 +35,13 @@
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <script src="./bootstrap.js"></script>
+
+    <div>
+      <span>Url:</span>
+      <input id="hashinput" readonly="true"></input>
+      <button id="copyurl">Copy</button>
+    </div>
+
     <button class="generator" data-size="10">Generate 10 random points</button>
     <button class="generator" data-size="20">Generate 20 random points</button>
     <button class="generator" data-size="100">Generate 100 random points</button>
@@ -39,10 +51,39 @@
     <div>
       <span id="points" />
     </div>
+
     <div class="canvas-container">
       <canvas id="wasm" class="left"></canvas>
       <canvas id="js" class="right"></canvas>
     </div>
+    <div class="container">
+
+      <div class="column">
+        <h3>Delaunator-rs (WASM)</h3>
+        <div class="container">
+          <div class="column">
+            <span>Triangulation time (ms):</span>
+          </div>
+          <div class="column">
+            <span id="wasm-elapsed"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <h3>Delaunator (Javascript)</h3>
+        <div class="container">
+          <div class="column">
+            <span>Triangulation time (ms):</span>
+          </div>
+          <div class="column">
+            <span id="js-elapsed"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="show-diff">Calculate result differences</button>
     <div id="diff"></div>
   </body>
 </html>
