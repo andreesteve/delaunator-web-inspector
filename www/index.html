@@ -19,12 +19,23 @@
         width: 49%;
         border: 1px solid black;
       }
+
+      .pointsinput {
+        width: 100%;
+        height: 50px;
+        resize:vertical;
+      }
     </style>
   </head>
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <script src="./bootstrap.js"></script>
-    <button id="newPoints">New</button>
+    <button class="generator" data-size="10">Generate 10 random points</button>
+    <button class="generator" data-size="20">Generate 20 random points</button>
+    <button class="generator" data-size="100">Generate 100 random points</button>
+    <button class="generator" data-size="1000">Generate 1000 random points</button>
+    <button class="generator" data-size="5000">Generate 5000 random points</button>
+    <textarea class="pointsinput" id="points"></textarea>
     <div>
       <span id="points" />
     </div>
