@@ -28,7 +28,8 @@
   "homepage": "https://github.com/rustwasm/create-wasm-app#readme",
   "dependencies": {
     "delaunator-wasm": "file:../pkg",
-    "delaunator": "5.0.0"
+    "delaunator": "5.0.0",
+    "diff": "5.0.0"
   },
   "devDependencies": {
     "webpack": "^4.29.3",

@@ -3,9 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>Hello wasm-pack!</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+    <!-- Javascripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+    <style>
+      .canvas-container {
+        display: block;
+        width: 100%;
+      }
+
+      .canvas-container canvas {
+        display: block;
+        float: left;
+        width: 49%;
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <script src="./bootstrap.js"></script>
+    <button id="newPoints">New</button>
+    <div>
+      <span id="points" />
+    </div>
+    <div class="canvas-container">
+      <canvas id="wasm" class="left"></canvas>
+      <canvas id="js" class="right"></canvas>
+    </div>
+    <div id="diff"></div>
   </body>
 </html>
