@@ -15,7 +15,7 @@ export function getPointsFromUrl() {
 }
 
 export function generateUrl(points) {
-    let base = window.location.origin + "#";
+    let base = window.location.origin + window.location.pathname  + "#";
     base = base + rison.encode_array(points);
     console.log(base);
     return base;
