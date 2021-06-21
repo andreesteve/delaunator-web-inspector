@@ -9,14 +9,23 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-#[wasm_bindgen]
-extern {
-    fn alert(s: &str);
-}
+mod built_info {
+    // The file has been placed there by the build script.
+    include!(concat!(env!("OUT_DIR"), "/built.rs"));
+ }
 
 #[wasm_bindgen]
-pub fn init() {
+pub fn init() -> String {
     utils::set_panic_hook();
+
+    // get delaunator version
+    built_info::DEPENDENCIES.iter()
+        .filter(|(name, _)| name == &"delaunator")
+        .map(|(_, version)| version)
+        .copied()
+        .next()
+        .unwrap_or(&"")
+        .into()
 }
 
 #[wasm_bindgen]
@@ -39,9 +48,4 @@ pub fn triangulate(points: &[f64]) -> Box<[usize]>  {
     result.append(&mut t.hull);
 
     result.into_boxed_slice()
-}
-
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, delaunator-web-inspector!");
 }

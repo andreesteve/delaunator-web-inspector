@@ -76,4 +76,8 @@ document.getElementById("points").addEventListener("change", function() {
 });
 window.addEventListener("hashchange", function() { generateAndUpdatePoints({ points: url.getPointsFromUrl() }); });
 
+const versions = triangulation.getVersions();
+document.getElementById("wasm-version").textContent = versions.wasm;
+document.getElementById("js-version").textContent = versions.js;
+
 generateAndUpdatePoints({ points: url.getPointsFromUrl() });

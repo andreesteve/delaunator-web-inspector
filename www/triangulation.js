@@ -1,7 +1,11 @@
 import * as wasm from "delaunator-wasm";
 import Delaunator from 'delaunator';
 
-wasm.init();
+var versions = {
+    wasm: "",
+    js: DELAUNATOR_JS_VERSION
+};
+versions.wasm = wasm.init();
 
 function nextPoint() {
     return 10 * Math.random() + 4 * Math.random() + Math.random();
@@ -20,6 +24,10 @@ function generateRandomPoints(size) {
 function normalize_haldedges(array) {
     // already converts overflow to -1
     return new Int32Array(array);
+}
+
+export function getVersions() {
+    return versions;
 }
 
 export function triangulateRS(points) {

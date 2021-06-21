@@ -1,5 +1,7 @@
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require('path');
+const webpack = require('webpack');
+const package = require("./package.json");
 
 module.exports = {
   entry: "./bootstrap.js",
@@ -9,6 +11,9 @@ module.exports = {
   },
   mode: "development",
   plugins: [
-    new CopyWebpackPlugin(['index.html'])
+    new CopyWebpackPlugin(['index.html']),
+    new webpack.DefinePlugin({
+      DELAUNATOR_JS_VERSION: JSON.stringify(package.dependencies.delaunator)
+    })
   ],
 };
