@@ -37,7 +37,7 @@ function renderInternalEdges(points, delaunator, context) {
   }
 
 // adapted from https://observablehq.com/d/2ffd8a583a29944d
-function renderOnCanvas(points, delaunator, canvasId) {
+function renderOnCanvas(points, delaunator, canvasId, includeLabels) {
     const canvas = document.getElementById(canvasId);
     const context = canvas.getContext('2d');
 
@@ -68,8 +68,9 @@ function renderOnCanvas(points, delaunator, canvasId) {
     context.fillStyle = "white";
     context.fillRect(0, 0, width, height);
 
+    console.log(width * height);
     context.fillStyle = "black";
-    context.font = '0.75px serif';
+    context.font = '0.05em serif';
 
     context.translate(width / 2, height / 2);
     context.scale(scale, scale);
@@ -86,7 +87,6 @@ function renderOnCanvas(points, delaunator, canvasId) {
     context.strokeStyle = "red";
     context.stroke();
 
-    const includeLabels = points.length / 2 < 30;
     context.beginPath();
     renderPoints(points, context, 1.5 / scale, includeLabels);
     context.fillStyle = "black";

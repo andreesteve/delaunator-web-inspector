@@ -99,7 +99,8 @@ export function fromPoints(points) {
         rs,
         rsElapsed,
         js,
-        jsElapsed
+        jsElapsed,
+        showLabels: points.length < 2*30
     };
 
     return state;

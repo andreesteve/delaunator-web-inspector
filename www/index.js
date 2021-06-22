@@ -5,8 +5,8 @@ import * as url from './url';
 
 function draw(state) {
     console.log("Draw started");
-    renderOnCanvas(state.points, state.rs, "wasm");
-    renderOnCanvas(state.points, state.js, "js");
+    renderOnCanvas(state.points, state.rs, "wasm", state.showLabels);
+    renderOnCanvas(state.points, state.js, "js", state.showLabels);
     console.log("Draw finished");
 }
 
@@ -52,6 +52,7 @@ window.addEventListener("resize", function() {
     }
 });
 document.getElementById("show-diff").addEventListener("click", showDifference);
+document.getElementById("showHideLabels").addEventListener("click", function() { globalState.showLabels = !globalState.showLabels; draw(globalState); });
 document.getElementById("copyurl").addEventListener("click", function() {
     const input = document.getElementById("hashinput");
     input.select();
@@ -60,6 +61,7 @@ document.getElementById("copyurl").addEventListener("click", function() {
 });
 document.getElementById("points").addEventListener("change", function() {
     const value = document.getElementById("points").value;
+    const errorSpan = document.getElementById("points_message");
     try {
         const points = JSON.parse(value);
 
@@ -67,14 +69,16 @@ document.getElementById("points").addEventListener("change", function() {
             throw "Input is not an array."
         }
 
+        errorSpan.textContent = "";
         const flatPoints = points.flatMap(e => e);
         update(triangulation.fromPoints(flatPoints));
     } catch (e) {
-        // TODO show error
+        errorSpan.textContent = e.toString();
         console.error(e);
     }
 });
 window.addEventListener("hashchange", function() { generateAndUpdatePoints({ points: url.getPointsFromUrl() }); });
+
 
 const versions = triangulation.getVersions();
 document.getElementById("wasm-version").textContent = versions.wasm;
