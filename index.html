@@ -65,9 +65,14 @@
         height: 50px;
       }
 
-      .generator {
+      .generator, .button {
         text-align: center;
         line-height: 20px;
+        padding: 0;
+      }
+
+      .generator *, .button * {
+        vertical-align:middle;
       }
 
       .imgbutton {
@@ -78,6 +83,15 @@
         position: absolute;
         top: 0px;
         right: 0px;
+      }
+
+      a {
+        color: black;
+        text-decoration: none; /* no underline */
+      }
+
+      .error {
+        color: red;
       }
     </style>
   </head>
@@ -94,11 +108,15 @@
 
       <div class="container">
         <div class="column">
-          <button class="generator" data-size="10"><span class="material-icons">&#xe043;</span> 10</button>
+          <button class="generator" data-size="10"><span class="material-icons">&#xe043;</span>10</button>
           <button class="generator" data-size="20"><span class="material-icons">&#xe043;</span> 20</button>
           <button class="generator" data-size="100"><span class="material-icons">&#xe043;</span> 100</button>
           <button class="generator" data-size="1000"><span class="material-icons">&#xe043;</span> 1000</button>
           <button class="generator" data-size="5000"><span class="material-icons">&#xe043;</span> 5000</button>
+        </div>
+
+        <div class="column">
+          <button class="button" id="showHideLabels"><span class="material-icons">&#xe866;</span> Hide/Show point labels</button>
         </div>
 
         <div class="column">
@@ -111,7 +129,7 @@
       <div class="container">
 
         <div class="column">
-          <h3>Delaunator-rs (WASM)</h3>
+          <a href="https://github.com/mourner/delaunator-rs"><h3>Delaunator-rs (WASM)</h3></a>
           <div class="container">
             <div class="column">
               <span>Version:</span>
@@ -123,7 +141,7 @@
         </div>
 
         <div class="column">
-          <h3>Delaunator (Javascript)</h3>
+          <a href="https://github.com/mapbox/delaunator"><h3>Delaunator (Javascript)</h3></a>
           <div class="container">
             <div class="column">
               <span>Version:</span>
@@ -169,10 +187,14 @@
       <div class="container">
         <textarea class="pointsinput" id="points"></textarea>
       </div>
+      <div class="container">
+        <span id="points_message" class="error">
+        </span>
+      </div>
 
       <h3>Result diff</h2>
       <div class="container">
-        <button id="show-diff">Calculate result differences</button>
+        <button id="show-diff">Calculate result differences (this is SLOW!)</button>
       </div>
       <div id="diff"></div>
     </div>
