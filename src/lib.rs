@@ -34,8 +34,7 @@ pub fn triangulate(points: &[f64]) -> Box<[usize]>  {
         .map(|v| Point { x: v[0], y: v[1] })
         .collect();
 
-    let mut t = delaunator::triangulate(&p)
-        .unwrap();
+    let mut t = delaunator::triangulate(&p);
 
     // convert all results into single array that will be copied back into JS memory
     let mut result = Vec::with_capacity(4 + t.triangles.len() + t.halfedges.len() + t.hull.len());
